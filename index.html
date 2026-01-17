@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auploads | Powered by ANKIT X MODZ</title>
+    
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #161b22;
+            --accent: #58a6ff;
+            --text-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        /* Rainbow Glowing Box for Telegram */
+        .tg-glow-box {
+            margin: 25px auto;
+            width: 85%;
+            max-width: 450px;
+            padding: 15px;
+            background: #000;
+            border-radius: 12px;
+            font-weight: bold;
+            position: relative;
+            animation: rainbowBorder 3s linear infinite;
+            border: 3px solid transparent;
+        }
+
+        @keyframes rainbowBorder {
+            0% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
+            25% { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
+            50% { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
+            75% { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
+            100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
+        }
+
+        .tg-link { color: white; text-decoration: none; font-size: 1.3rem; letter-spacing: 1px; }
+
+        header h1 { color: var(--accent); font-size: 2.8rem; margin-top: 20px; }
+        .owner-tag { color: #8b949e; margin-bottom: 30px; font-weight: bold; }
+
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+        }
+
+        input[type="email"], input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            background: #0d1117;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover { opacity: 0.8; transform: translateY(-2px); }
+        .hidden { display: none; }
+
+        /* Customizing Uploadcare Widget Style */
+        .uploadcare--widget {
+            background: #1e293b;
+            border: 1px solid var(--accent);
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
+            width: 100%;
+        }
+
+        .uploadcare--widget__button_type_open {
+            background-color: #238636 !important;
+            color: white !important;
+            padding: 10px;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 50px 20px;
+            background: #0d1117;
+        }
+
+        .stat-line { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin: 15px 0; }
+        .made-by { font-size: 1.5rem; color: #ff7b72; font-weight: bold; margin-top: 20px; text-transform: uppercase; }
+        .property { color: #484f58; font-size: 0.8rem; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="tg-glow-box">
+        <a href="https://t.me/+PvAMD5GrdcBkNDE1" target="_blank" class="tg-link">JOIN TELEGRAM</a>
+    </div>
+
+    <header>
+        <h1>DevUploads</h1>
+        <div class="owner-tag">Owner: ANKIT X MODZ</div>
+    </header>
+
+    <div class="container">
+        <div id="auth-section">
+            <h3>Login / Create Account</h3>
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="text" id="username" placeholder="Choose Username">
+            <input type="password" id="password" placeholder="Password (Min 8 Letters)">
+            <button class="btn" onclick="handleAuth()">Access Dashboard</button>
+        </div>
+
+        <div id="upload-section" class="hidden">
+            <h3>Welcome, <span id="user-display" style="color:var(--accent)"></span>!</h3>
+            <p>Select any file (APK, ZIP, PDF, Video) to upload.</p>
+            
+            <input type="hidden" role="uploadcare-uploader" 
+                   data-public-key="d2dac43b0699b5b058d8" 
+                   data-tabs="file" 
+                   id="myFile" />
+
+            <div id="linkResult" style="margin-top:25px; font-weight:bold;"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="stat-line">1M+ ACTIVE USERS</div>
+        <div class="stat-line">4B+ FILES UPLOADED</div>
+        <div class="made-by">MADE BY ANKIT</div>
+        <div class="property">© 2026 ANKIT X MODZ | ALL RIGHTS RESERVED</div>
+    </footer>
+
+    <script>
+        // Authentication Function
+        function handleAuth() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+
+            // Password Validation (Requirement: Min 8 Letters)
+            if (pass.length < 8) {
+                alert("Opps! Password kam se kam 8 letters ka hona chahiye.");
+                return;
+            }
+            if (!email.includes("@")) {
+                alert("Please valid email daalein!");
+                return;
+            }
+            if (user === "") {
+                alert("Username toh daalo bhai!");
+                return;
+            }
+
+            // Successfully entered
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('upload-section').classList.remove('hidden');
+            document.getElementById('user-display').innerText = user;
+        }
+
+        // Uploadcare File Processing
+        const widget = uploadcare.Widget('#myFile');
+
+        widget.onUploadComplete((fileInfo) => {
+            const resultDiv = document.getElementById('linkResult');
+            const fileUrl = fileInfo.cdnUrl; // Direct link to file
+
+            resultDiv.innerHTML = `
+                <p style="color:#22c55e">✅ Upload Success!</p>
+                <input type="text" value="${fileUrl}" readonly id="fileUrl" 
+                       style="width:90%; padding:10px; border-radius:8px; border:none; background:#0d1117; color:#58a6ff; text-align:center;">
+                <br>
+                <button class="btn" onclick="copyText()" style="width:50%; background:#58a6ff;">Copy Link</button>
+            `;
+        });
+
+        // Copy Link to Clipboard
+        function copyText() {
+            const copyText = document.getElementById("fileUrl");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Link Copy Ho Gaya! Ab doston ko share karein.");
+        }
+    </script>
+</body>
+</html>
+
